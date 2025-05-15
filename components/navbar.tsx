@@ -6,6 +6,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import { usePathname } from "next/navigation" // Add this if needed for active link detection
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -20,6 +21,7 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,7 +60,9 @@ export default function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className="text-gray-700 hover:text-primary transition-colors font-medium"
+              className={`text-gray-700 hover:text-primary transition-colors font-medium ${
+                pathname === link.href ? "text-primary" : ""
+              }`}
             >
               {link.name}
             </Link>
@@ -89,7 +93,9 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-gray-700 hover:text-primary transition-colors py-2 font-medium"
+                  className={`text-gray-700 hover:text-primary transition-colors py-2 font-medium ${
+                    pathname === link.href ? "text-primary" : ""
+                  }`}
                   onClick={() => setIsOpen(false)}
                 >
                   {link.name}

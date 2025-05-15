@@ -5,6 +5,10 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import { Suspense } from "react"
+
+// Import the static version of Analytics for server components
+import StaticAnalytics from "@/components/static-analytics"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -91,11 +95,15 @@ export default function RootLayout({
       <body className={`${inter.variable} ${montserrat.variable} font-sans`}>
         <ThemeProvider attribute="class" defaultTheme="light">
           <div className="flex flex-col min-h-screen">
-            <Navbar />
+            <Suspense>
+              <Navbar />
+            </Suspense>
             <main className="flex-grow">{children}</main>
             <Footer />
           </div>
         </ThemeProvider>
+        {/* Use the static version of Analytics */}
+        <StaticAnalytics />
       </body>
     </html>
   )

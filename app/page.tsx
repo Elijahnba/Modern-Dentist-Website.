@@ -36,7 +36,7 @@ export default function Home() {
             <div className="md:w-1/2">
               <div className="relative rounded-lg overflow-hidden shadow-xl">
                 <Image
-                  src="/placeholder-xp818.png"
+                  src="/images/hero-dentist.png"
                   alt="Bright Smile Dental Clinic"
                   width={800}
                   height={600}
@@ -147,7 +147,7 @@ export default function Home() {
             <div className="md:w-1/2 mb-10 md:mb-0">
               <div className="relative rounded-lg overflow-hidden shadow-xl">
                 <Image
-                  src="/placeholder-yn7l6.png"
+                  src="/images/dentist-female.png"
                   alt="Dr. Sarah Johnson"
                   width={800}
                   height={600}

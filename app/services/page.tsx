@@ -30,15 +30,57 @@ export default async function ServicesPage() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service: any) => (
-              <ServiceCard
-                key={service._id}
-                title={service.title}
-                description={service.description}
-                icon={service.icon}
-                href={`/services/${service.slug.current}`}
-              />
-            ))}
+            {services && services.length > 0 ? (
+              services.map((service: any) => (
+                <ServiceCard
+                  key={service._id}
+                  title={service.title}
+                  description={service.description}
+                  icon={service.icon}
+                  href={`/services/${service.slug.current}`}
+                />
+              ))
+            ) : (
+              // Fallback services when no data is available from Sanity
+              <>
+                <ServiceCard
+                  title="General Dentistry"
+                  description="Comprehensive care for your overall oral health, including cleanings, exams, fillings, and preventive treatments."
+                  icon="Tooth"
+                  href="/services/general-dentistry"
+                />
+                <ServiceCard
+                  title="Cosmetic Dentistry"
+                  description="Transform your smile with our range of cosmetic treatments, including whitening, veneers, bonding, and smile makeovers."
+                  icon="Sparkles"
+                  href="/services/cosmetic-dentistry"
+                />
+                <ServiceCard
+                  title="Orthodontics"
+                  description="Straighten your teeth and correct bite issues with our modern orthodontic treatments, including clear aligners and braces."
+                  icon="ArrowsUpDown"
+                  href="/services/orthodontics"
+                />
+                <ServiceCard
+                  title="Pediatric Dentistry"
+                  description="Specialized dental care for children in a friendly, comfortable environment that makes dental visits fun and educational."
+                  icon="Baby"
+                  href="/services/pediatric-dentistry"
+                />
+                <ServiceCard
+                  title="Restorative Dentistry"
+                  description="Restore damaged or missing teeth with crowns, bridges, implants, and dentures to regain function and aesthetics."
+                  icon="HeartPulse"
+                  href="/services/restorative-dentistry"
+                />
+                <ServiceCard
+                  title="Emergency Care"
+                  description="Immediate dental care for unexpected issues like toothaches, broken teeth, or other dental emergencies."
+                  icon="Clock"
+                  href="/services/emergency-care"
+                />
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -122,7 +164,7 @@ export default async function ServicesPage() {
             </div>
             <div className="md:w-1/2">
               <Image
-                src="/placeholder-oh0ec.png"
+                src="/images/dental-technology.png"
                 alt="Advanced Dental Technology"
                 width={800}
                 height={600}

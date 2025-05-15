@@ -14,20 +14,27 @@ type Props = {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await getBlogPostBySlug(params.slug)
+  try {
+    const post = await getBlogPostBySlug(params.slug)
 
-  if (!post) {
-    return {
-      title: "Blog Post Not Found | Bright Smile Dental",
+    if (!post) {
+      return {
+        title: "Blog Post Not Found | Bright Smile Dental",
+      }
     }
-  }
 
-  return {
-    title: `${post.title} | Bright Smile Dental Blog`,
-    description: post.excerpt || "Read this informative dental health article from Bright Smile Dental.",
-    openGraph: {
-      images: post.mainImage ? [urlFor(post.mainImage).width(1200).height(630).url()] : [],
-    },
+    return {
+      title: `${post.title} | Bright Smile Dental Blog`,
+      description: post.excerpt || "Read this informative dental health article from Bright Smile Dental.",
+      openGraph: {
+        images: post.mainImage ? [urlFor(post.mainImage).width(1200).height(630).url()] : [],
+      },
+    }
+  } catch (error) {
+    console.error(`Error generating metadata for blog post ${params.slug}:`, error)
+    return {
+      title: "Blog Post | Bright Smile Dental",
+    }
   }
 }
 
@@ -76,11 +83,128 @@ const PortableTextComponents = {
   },
 }
 
-export default async function BlogPostPage({ params }: Props) {
-  const post = await getBlogPostBySlug(params.slug)
+// Sample blog post for fallback
+const sampleBlogPost = {
+  _id: "sample1",
+  title: "The Benefits of Regular Dental Check-ups",
+  publishedAt: "2023-05-10T00:00:00Z",
+  author: { name: "Dr. Sarah Johnson" },
+  categories: [{ title: "Preventive Care" }],
+  body: [
+    {
+      _type: "block",
+      style: "normal",
+      children: [
+        {
+          _type: "span",
+          text: "Regular dental check-ups are essential for maintaining good oral health and preventing serious dental issues. Most dentists recommend visiting every six months for a check-up and cleaning, though some patients may need more frequent visits depending on their oral health needs.",
+        },
+      ],
+    },
+    {
+      _type: "block",
+      style: "h2",
+      children: [
+        {
+          _type: "span",
+          text: "Why Regular Check-ups Matter",
+        },
+      ],
+    },
+    {
+      _type: "block",
+      style: "normal",
+      children: [
+        {
+          _type: "span",
+          text: "During a regular dental check-up, your dentist will examine your teeth, gums, and mouth for signs of problems. Early detection of issues like cavities, gum disease, or even oral cancer can lead to simpler and less expensive treatments. Here are some key benefits of regular dental visits:",
+        },
+      ],
+    },
+    {
+      _type: "block",
+      style: "normal",
+      markDefs: [],
+      children: [
+        {
+          _type: "span",
+          text: "Prevention of tooth decay and gum disease - Professional cleanings remove plaque and tartar that regular brushing and flossing can't reach.",
+        },
+      ],
+    },
+    {
+      _type: "block",
+      style: "normal",
+      markDefs: [],
+      children: [
+        {
+          _type: "span",
+          text: "Early detection of dental problems - Your dentist can spot issues before they become painful or require extensive treatment.",
+        },
+      ],
+    },
+    {
+      _type: "block",
+      style: "normal",
+      markDefs: [],
+      children: [
+        {
+          _type: "span",
+          text: "Screening for oral cancer - Regular check-ups include screening for oral cancer, which is highly treatable when caught early.",
+        },
+      ],
+    },
+    {
+      _type: "block",
+      style: "normal",
+      markDefs: [],
+      children: [
+        {
+          _type: "span",
+          text: "Maintaining good overall health - Poor oral health has been linked to several serious conditions, including heart disease and diabetes.",
+        },
+      ],
+    },
+  ],
+  relatedPosts: [
+    {
+      _id: "sample2",
+      title: "Understanding Teeth Whitening Options",
+      slug: { current: "understanding-teeth-whitening-options" },
+      publishedAt: "2023-04-22T00:00:00Z",
+    },
+    {
+      _id: "sample3",
+      title: "The Connection Between Oral Health and Overall Wellness",
+      slug: { current: "oral-health-and-overall-wellness" },
+      publishedAt: "2022-12-05T00:00:00Z",
+    },
+  ],
+}
 
-  if (!post) {
-    notFound()
+export default async function BlogPostPage({ params }: Props) {
+  let post
+
+  try {
+    post = await getBlogPostBySlug(params.slug)
+
+    // If no post found, check if it's one of our sample slugs
+    if (!post) {
+      if (params.slug === "benefits-of-regular-dental-checkups") {
+        post = sampleBlogPost
+      } else {
+        notFound()
+      }
+    }
+  } catch (error) {
+    console.error(`Error fetching blog post with slug ${params.slug}:`, error)
+
+    // If it's our sample post slug, use the sample data
+    if (params.slug === "benefits-of-regular-dental-checkups") {
+      post = sampleBlogPost
+    } else {
+      notFound()
+    }
   }
 
   const formattedDate = new Date(post.publishedAt).toLocaleDateString("en-US", {
@@ -128,7 +252,7 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="container mx-auto px-4 -mt-8">
           <div className="relative h-[300px] md:h-[400px] lg:h-[500px] rounded-lg overflow-hidden shadow-xl">
             <Image
-              src={urlFor(post.mainImage).width(1200).height(600).url() || "/placeholder.svg"}
+              src={urlFor(post.mainImage).width(1200).height(600).url() || "/images/dental-blog-post.png"}
               alt={post.title}
               fill
               className="object-cover"
@@ -189,7 +313,7 @@ export default async function BlogPostPage({ params }: Props) {
                               src={
                                 relatedPost.mainImage
                                   ? urlFor(relatedPost.mainImage).width(400).height(200).url()
-                                  : "/placeholder.svg?height=200&width=400&query=dental care"
+                                  : "/images/dental-blog-post.png"
                               }
                               alt={relatedPost.title}
                               fill

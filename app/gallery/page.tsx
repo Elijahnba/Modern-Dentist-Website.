@@ -21,7 +21,7 @@ const categories = [
 const galleryImages = [
   {
     id: 1,
-    src: "/placeholder.svg?height=600&width=800&query=before and after dental veneers",
+    src: "/images/before-after-veneers.png",
     alt: "Before and After: Dental Veneers",
     category: "cosmetic",
     title: "Porcelain Veneers",
@@ -29,7 +29,7 @@ const galleryImages = [
   },
   {
     id: 2,
-    src: "/placeholder.svg?height=600&width=800&query=before and after teeth whitening",
+    src: "/images/before-after-whitening.png",
     alt: "Before and After: Teeth Whitening",
     category: "cosmetic",
     title: "Professional Whitening",
@@ -37,7 +37,7 @@ const galleryImages = [
   },
   {
     id: 3,
-    src: "/placeholder.svg?height=600&width=800&query=before and after invisalign treatment",
+    src: "/images/before-after-braces.png",
     alt: "Before and After: Invisalign",
     category: "orthodontic",
     title: "Invisalign Treatment",
@@ -45,7 +45,7 @@ const galleryImages = [
   },
   {
     id: 4,
-    src: "/placeholder.svg?height=600&width=800&query=before and after dental implant",
+    src: "/images/before-after-implant.png",
     alt: "Before and After: Dental Implant",
     category: "restorative",
     title: "Dental Implant",
@@ -53,7 +53,7 @@ const galleryImages = [
   },
   {
     id: 5,
-    src: "/placeholder.svg?height=600&width=800&query=before and after dental crown",
+    src: "/images/dental-treatment.png",
     alt: "Before and After: Dental Crown",
     category: "restorative",
     title: "Porcelain Crown",
@@ -61,7 +61,7 @@ const galleryImages = [
   },
   {
     id: 6,
-    src: "/placeholder.svg?height=600&width=800&query=before and after smile makeover",
+    src: "/images/dental-smile.png",
     alt: "Before and After: Smile Makeover",
     category: "cosmetic",
     title: "Complete Smile Makeover",
@@ -69,7 +69,7 @@ const galleryImages = [
   },
   {
     id: 7,
-    src: "/placeholder.svg?height=600&width=800&query=modern dental office reception",
+    src: "/images/dental-office-reception.png",
     alt: "Dental Office Reception",
     category: "office",
     title: "Our Reception Area",
@@ -77,7 +77,7 @@ const galleryImages = [
   },
   {
     id: 8,
-    src: "/placeholder.svg?height=600&width=800&query=modern dental treatment room",
+    src: "/images/dental-office-treatment.png",
     alt: "Dental Treatment Room",
     category: "office",
     title: "Treatment Room",
@@ -85,23 +85,23 @@ const galleryImages = [
   },
   {
     id: 9,
-    src: "/placeholder.svg?height=600&width=800&query=before and after dental bonding",
-    alt: "Before and After: Dental Bonding",
+    src: "/images/dental-checkup.png",
+    alt: "Dental Checkup",
     category: "cosmetic",
-    title: "Dental Bonding",
-    description: "Repair of chipped front tooth using composite bonding.",
+    title: "Dental Checkup",
+    description: "Regular checkups help maintain your oral health.",
   },
   {
     id: 10,
-    src: "/placeholder.svg?height=600&width=800&query=before and after dental bridge",
-    alt: "Before and After: Dental Bridge",
+    src: "/images/dental-treatment.png",
+    alt: "Dental Treatment",
     category: "restorative",
-    title: "Dental Bridge",
-    description: "Three-unit bridge to replace a missing tooth.",
+    title: "Dental Treatment",
+    description: "Advanced treatments for optimal dental health.",
   },
   {
     id: 11,
-    src: "/placeholder.svg?height=600&width=800&query=before and after braces treatment",
+    src: "/images/before-after-braces.png",
     alt: "Before and After: Braces",
     category: "orthodontic",
     title: "Traditional Braces",
@@ -109,7 +109,7 @@ const galleryImages = [
   },
   {
     id: 12,
-    src: "/placeholder.svg?height=600&width=800&query=modern dental office waiting room",
+    src: "/images/dental-office-waiting.png",
     alt: "Dental Office Waiting Room",
     category: "office",
     title: "Waiting Area",

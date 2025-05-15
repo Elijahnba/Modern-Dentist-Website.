@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Star, Quote } from "lucide-react"
+import { Star, Quote, AlertTriangle } from "lucide-react"
 import { motion } from "framer-motion"
 import BookingCta from "@/components/booking-cta"
 import { getTestimonials } from "@/lib/sanity"
@@ -17,20 +17,111 @@ const categories = [
   { id: "pediatric", name: "Pediatric Dentistry" },
 ]
 
+// Sample testimonials for fallback
+const sampleTestimonials = [
+  {
+    _id: "sample1",
+    name: "Michael Thompson",
+    category: "cosmetic",
+    rating: 5,
+    date: "2023-03-15",
+    quote:
+      "I had veneers done by Dr. Johnson and I couldn't be happier with the results! The entire process was explained clearly, and the team made sure I was comfortable every step of the way. My smile has never looked better, and I've received so many compliments.",
+    source: "Google",
+  },
+  {
+    _id: "sample2",
+    name: "Jennifer Lewis",
+    category: "general",
+    rating: 5,
+    date: "2023-02-03",
+    quote:
+      "I used to be terrified of dental visits, but Bright Smile Dental changed that completely. Their gentle approach and modern techniques make all the difference. Dr. Johnson took the time to address all my concerns and made sure I was comfortable throughout my treatment.",
+    source: "Facebook",
+  },
+  {
+    _id: "sample3",
+    name: "Robert Kim",
+    category: "general",
+    rating: 4,
+    date: "2023-01-20",
+    quote:
+      "The entire staff is friendly and professional. I appreciate how they work with my schedule and always make sure I'm comfortable during procedures. The office is clean and modern, and they use the latest technology for treatments.",
+    source: "Google",
+  },
+  {
+    _id: "sample4",
+    name: "Sarah Johnson",
+    category: "orthodontic",
+    rating: 5,
+    date: "2023-04-10",
+    quote:
+      "My Invisalign treatment with Dr. Chen was fantastic! He was very thorough in explaining the process and timeline. The results exceeded my expectations, and I'm so happy with my new smile.",
+    source: "Yelp",
+  },
+  {
+    _id: "sample5",
+    name: "David Wilson",
+    category: "pediatric",
+    rating: 5,
+    date: "2023-01-05",
+    quote:
+      "Dr. Rodriguez is amazing with children! My son used to be afraid of the dentist, but now he actually looks forward to his appointments. The entire staff is patient and kind, making the experience positive for kids.",
+    source: "Google",
+  },
+]
+
 export default function TestimonialsPage() {
   const [activeCategory, setActiveCategory] = useState("all")
   const [testimonials, setTestimonials] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     async function loadTestimonials() {
       setLoading(true)
+      setError(null)
+
       try {
-        const data = await getTestimonials(activeCategory !== "all" ? activeCategory : undefined)
-        setTestimonials(data)
-      } catch (error) {
-        console.error("Error loading testimonials:", error)
-        setTestimonials([])
+        // Check if we have Sanity credentials before attempting to fetch
+        const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
+
+        // If no project ID, use sample data
+        if (!projectId) {
+          console.log("No Sanity project ID found, using sample data")
+          const filteredTestimonials =
+            activeCategory === "all"
+              ? sampleTestimonials
+              : sampleTestimonials.filter((t) => t.category === activeCategory)
+          setTestimonials(filteredTestimonials)
+          return
+        }
+
+        // Try to fetch from Sanity
+        const category = activeCategory !== "all" ? activeCategory : undefined
+        const data = await getTestimonials(category)
+
+        // If we got data back, use it
+        if (data && data.length > 0) {
+          setTestimonials(data)
+        } else {
+          // Otherwise, filter the sample testimonials based on category
+          const filteredTestimonials =
+            activeCategory === "all"
+              ? sampleTestimonials
+              : sampleTestimonials.filter((t) => t.category === activeCategory)
+          setTestimonials(filteredTestimonials)
+        }
+      } catch (err) {
+        console.error("Error loading testimonials:", err)
+        setError("Unable to load testimonials from CMS. Showing sample testimonials instead.")
+
+        // Use filtered sample testimonials as fallback
+        const filteredTestimonials =
+          activeCategory === "all"
+            ? sampleTestimonials
+            : sampleTestimonials.filter((t) => t.category === activeCategory)
+        setTestimonials(filteredTestimonials)
       } finally {
         setLoading(false)
       }
@@ -68,10 +159,28 @@ export default function TestimonialsPage() {
             ))}
           </div>
 
+          {/* Error Message */}
+          {error && (
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8">
+              <div className="flex items-center">
+                <AlertTriangle className="h-5 w-5 text-amber-500 mr-2" />
+                <p className="text-amber-700">{error}</p>
+              </div>
+            </div>
+          )}
+
           {/* Testimonials Grid */}
           {loading ? (
             <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">Loading testimonials...</p>
+              <div
+                className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status"
+              >
+                <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                  Loading...
+                </span>
+              </div>
+              <p className="text-gray-500 text-lg mt-4">Loading testimonials...</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

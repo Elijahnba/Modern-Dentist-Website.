@@ -13,8 +13,54 @@ export const metadata: Metadata = {
   description: "Read our latest articles on dental health, treatments, and tips for maintaining a healthy smile.",
 }
 
+// Sample blog posts for fallback
+const sampleBlogPosts = [
+  {
+    _id: "sample1",
+    title: "The Benefits of Regular Dental Check-ups",
+    excerpt:
+      "Regular dental check-ups are essential for maintaining good oral health. Learn why you should visit your dentist every six months.",
+    publishedAt: "2023-05-10T00:00:00Z",
+    author: { name: "Dr. Sarah Johnson" },
+    categories: [{ title: "Preventive Care" }],
+    slug: { current: "benefits-of-regular-dental-checkups" },
+  },
+  {
+    _id: "sample2",
+    title: "Understanding Teeth Whitening Options",
+    excerpt:
+      "Explore the different teeth whitening options available, from professional in-office treatments to at-home kits.",
+    publishedAt: "2023-04-22T00:00:00Z",
+    author: { name: "Dr. Michael Chen" },
+    categories: [{ title: "Cosmetic Dentistry" }],
+    slug: { current: "understanding-teeth-whitening-options" },
+  },
+  {
+    _id: "sample3",
+    title: "Invisalign vs. Traditional Braces: Which is Right for You?",
+    excerpt:
+      "Compare the benefits and considerations of Invisalign clear aligners and traditional braces to help you make an informed decision.",
+    publishedAt: "2023-03-15T00:00:00Z",
+    author: { name: "Dr. Michael Chen" },
+    categories: [{ title: "Orthodontics" }],
+    slug: { current: "invisalign-vs-traditional-braces" },
+  },
+]
+
 export default async function BlogPage() {
-  const blogPosts = await getBlogPosts(10, 0)
+  let blogPosts = []
+
+  try {
+    blogPosts = await getBlogPosts(10, 0)
+
+    // If no blog posts from Sanity, use sample posts
+    if (!blogPosts || blogPosts.length === 0) {
+      blogPosts = sampleBlogPosts
+    }
+  } catch (error) {
+    console.error("Error fetching blog posts:", error)
+    blogPosts = sampleBlogPosts
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -36,11 +82,7 @@ export default async function BlogPage() {
               <div className="grid grid-cols-1 lg:grid-cols-2">
                 <div className="relative h-64 lg:h-auto">
                   <Image
-                    src={
-                      blogPosts[0].mainImage
-                        ? urlFor(blogPosts[0].mainImage).url()
-                        : "/placeholder.svg?height=600&width=800&query=dental blog post"
-                    }
+                    src={blogPosts[0].mainImage ? urlFor(blogPosts[0].mainImage).url() : "/images/dental-blog-post.png"}
                     alt={blogPosts[0].title}
                     fill
                     className="object-cover"
@@ -92,11 +134,7 @@ export default async function BlogPage() {
               <Card key={post._id} className="border-none shadow-lg overflow-hidden h-full">
                 <div className="relative h-48">
                   <Image
-                    src={
-                      post.mainImage
-                        ? urlFor(post.mainImage).url()
-                        : "/placeholder.svg?height=400&width=600&query=dental health"
-                    }
+                    src={post.mainImage ? urlFor(post.mainImage).url() : "/images/dental-blog-post.png"}
                     alt={post.title}
                     fill
                     className="object-cover"

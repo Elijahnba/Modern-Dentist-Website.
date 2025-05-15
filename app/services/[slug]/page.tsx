@@ -61,7 +61,7 @@ export default async function ServicePage({ params }: Props) {
               {service.image && (
                 <div className="mb-8 rounded-lg overflow-hidden shadow-lg">
                   <Image
-                    src={urlFor(service.image).width(800).height(500).url() || "/placeholder.svg"}
+                    src={urlFor(service.image).width(800).height(500).url() || "/images/dental-treatment.png"}
                     alt={service.title}
                     width={800}
                     height={500}
@@ -102,7 +102,9 @@ export default async function ServicePage({ params }: Props) {
                           {procedure.image && (
                             <div className="relative h-48 md:h-auto">
                               <Image
-                                src={urlFor(procedure.image).width(300).height(200).url() || "/placeholder.svg"}
+                                src={
+                                  urlFor(procedure.image).width(300).height(200).url() || "/images/dental-checkup.png"
+                                }
                                 alt={procedure.title}
                                 fill
                                 className="object-cover"

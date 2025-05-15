@@ -28,8 +28,8 @@ export default function AboutPage() {
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-10 md:mb-0">
               <Image
-                src="/placeholder-ghr8m.png"
-                alt="Bright Smile Dental Clinic"
+                src="/images/dental-team.png"
+                alt="Bright Smile Dental Clinic Team"
                 width={800}
                 height={600}
                 className="rounded-lg shadow-xl"
@@ -80,7 +80,7 @@ export default function AboutPage() {
             <Card className="border-none shadow-lg">
               <CardContent className="p-0">
                 <Image
-                  src="/professional-female-dentist-smiling.png"
+                  src="/images/dentist-female.png"
                   alt="Dr. Sarah Johnson"
                   width={600}
                   height={400}
@@ -102,7 +102,7 @@ export default function AboutPage() {
             <Card className="border-none shadow-lg">
               <CardContent className="p-0">
                 <Image
-                  src="/placeholder-6b92y.png"
+                  src="/images/dentist-male.png"
                   alt="Dr. Michael Chen"
                   width={600}
                   height={400}
@@ -124,7 +124,7 @@ export default function AboutPage() {
             <Card className="border-none shadow-lg">
               <CardContent className="p-0">
                 <Image
-                  src="/placeholder.svg?height=400&width=600&query=young latina female dentist smiling"
+                  src="/images/dentist-female.png"
                   alt="Dr. Emily Rodriguez"
                   width={600}
                   height={400}
@@ -146,7 +146,7 @@ export default function AboutPage() {
             <Card className="border-none shadow-lg">
               <CardContent className="p-0">
                 <Image
-                  src="/placeholder.svg?height=400&width=600&query=friendly dental hygienist female"
+                  src="/images/dental-hygienist.png"
                   alt="Jessica Taylor"
                   width={600}
                   height={400}
@@ -167,7 +167,7 @@ export default function AboutPage() {
             <Card className="border-none shadow-lg">
               <CardContent className="p-0">
                 <Image
-                  src="/placeholder.svg?height=400&width=600&query=male dental assistant in scrubs"
+                  src="/images/dental-assistant.png"
                   alt="Robert Wilson"
                   width={600}
                   height={400}
@@ -188,7 +188,7 @@ export default function AboutPage() {
             <Card className="border-none shadow-lg">
               <CardContent className="p-0">
                 <Image
-                  src="/placeholder.svg?height=400&width=600&query=friendly office manager at reception desk"
+                  src="/images/dental-office-manager.png"
                   alt="Lisa Johnson"
                   width={600}
                   height={400}
@@ -275,21 +275,21 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Image
-              src="/placeholder.svg?height=400&width=600&query=modern dental clinic reception area"
+              src="/images/dental-office-reception.png"
               alt="Dental Office Reception"
               width={600}
               height={400}
               className="rounded-lg shadow-md"
             />
             <Image
-              src="/placeholder.svg?height=400&width=600&query=dental treatment room with modern equipment"
+              src="/images/dental-office-treatment.png"
               alt="Treatment Room"
               width={600}
               height={400}
               className="rounded-lg shadow-md"
             />
             <Image
-              src="/placeholder.svg?height=400&width=600&query=dental office waiting area with comfortable seating"
+              src="/images/dental-office-waiting.png"
               alt="Waiting Area"
               width={600}
               height={400}

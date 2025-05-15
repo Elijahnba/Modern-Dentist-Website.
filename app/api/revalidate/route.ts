@@ -14,6 +14,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Invalid webhook secret" }, { status: 401 })
     }
 
+    // Check if we have the required Sanity credentials
+    if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || !process.env.NEXT_PUBLIC_SANITY_DATASET) {
+      return NextResponse.json({ message: "Sanity credentials not configured" }, { status: 500 })
+    }
+
     // Extract the document type and slug from the body
     const { type, slug } = body
 
